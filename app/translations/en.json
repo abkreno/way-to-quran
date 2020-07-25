@@ -1,1 +1,3 @@
-[]
+{
+  "app.containers.HomePage.header": "Hello {number}"
+}

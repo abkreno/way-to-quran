@@ -1,0 +1,4 @@
+{
+  "app.containers.HomePage.header": "مرحبا {number, plural, =0 {لاشئ} other {{number} مرات}}",
+  "delim": ","
+}
