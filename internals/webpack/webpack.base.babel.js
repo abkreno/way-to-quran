@@ -113,6 +113,8 @@ module.exports = options => ({
     // drop any unreachable code.
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'development',
+      GOOGLE_OAUTH_CLIENT_ID:
+        '735129005018-7k84rrooilb2j6plvqp2her60pefdhtq.apps.googleusercontent.com',
     }),
   ]),
   resolve: {
