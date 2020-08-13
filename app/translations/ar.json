@@ -1,4 +1,3 @@
 {
-  "app.containers.HomePage.header": "مرحبا {number, plural, =0 {لاشئ} other {{number} مرات}}",
-  "delim": ","
+  "app.containers.HomePage.header": "مرحباً قى موقع الطريق إلى القرآن"
 }

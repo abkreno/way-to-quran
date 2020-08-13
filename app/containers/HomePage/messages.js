@@ -10,8 +10,5 @@ export const scope = 'app.containers.HomePage';
 export default defineMessages({
   header: {
     id: `${scope}.header`,
-    values: {
-      number: 10,
-    },
   },
 });

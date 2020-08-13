@@ -7,14 +7,19 @@
 
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
+import withDirection, { withDirectionPropTypes } from 'react-with-direction';
 import messages from './messages';
-import FormattedNumber from '../../components/FormattedNumber';
 
-export default function HomePage() {
+function HomePage({ direction }) {
   return (
-    <h1>
+    <h1 style={{ direction }}>
       <FormattedMessage {...messages.header} />
-      <FormattedNumber value={10000} />
     </h1>
   );
 }
+
+HomePage.propTypes = {
+  ...withDirectionPropTypes,
+};
+
+export default withDirection(HomePage);
