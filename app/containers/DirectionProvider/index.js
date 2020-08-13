@@ -18,10 +18,11 @@ import DirectionProvider, {
 import { makeSelectLocale } from 'containers/LanguageProvider/selectors';
 
 export function LanguageProvider(props) {
+  const direction = props.locale.includes('ar')
+    ? DIRECTIONS.RTL
+    : DIRECTIONS.LTR;
   return (
-    <DirectionProvider
-      direction={props.locale.includes('ar') ? DIRECTIONS.RTL : DIRECTIONS.LTR}
-    >
+    <DirectionProvider direction={direction}>
       {React.Children.only(props.children)}
     </DirectionProvider>
   );
