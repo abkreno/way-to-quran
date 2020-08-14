@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { GoogleLogin } from 'react-google-login';
 import { FormattedMessage } from 'react-intl';
+import { withRouter, Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import {
   Button,
   Icon,
@@ -12,15 +14,15 @@ import {
 } from 'semantic-ui-react';
 import messages from './messages';
 import mushafLogo from '../../images/mushaf.png';
-// import PropTypes from 'prop-types';
 
-export default class LoginPage extends Component {
+class LoginPage extends Component {
   static propTypes = {};
 
   componentDidMount() {}
 
   onSuccess = response => {
-    console.log(response);
+    localStorage.setItem('jwt', response.accessToken);
+    this.props.history.push('/');
   };
 
   onFailure = response => {
@@ -28,13 +30,17 @@ export default class LoginPage extends Component {
   };
 
   render() {
+    if (localStorage.getItem('jwt')) {
+      return <Redirect to="/" />;
+    }
     return (
       <Grid
         textAlign="center"
-        style={{ height: '100vh' }}
+        reversed="mobile vertically"
+        style={{ height: 'calc(100vh - 61px)', marginLeft: 0, marginRight: 0 }}
         verticalAlign="middle"
       >
-        <Grid.Column style={{ maxWidth: '40vw' }}>
+        <Grid.Column style={{ maxWidth: '90%', width: 600 }}>
           <Segment>
             <Header as="h2" color="teal" textAlign="center">
               <Image src={mushafLogo} />{' '}
@@ -44,9 +50,15 @@ export default class LoginPage extends Component {
               <GoogleLogin
                 className="login-button"
                 clientId={process.env.GOOGLE_OAUTH_CLIENT_ID}
-                buttonText="Login"
-                render={() => (
-                  <Button color="google plus" fluid size="large">
+                render={renderProps => (
+                  <Button
+                    onClick={renderProps.onClick}
+                    disabled={renderProps.disabled}
+                    loading={renderProps.disabled}
+                    color="google plus"
+                    fluid
+                    size="large"
+                  >
                     <Icon name="google" />{' '}
                     <FormattedMessage {...messages.loginButtonText} />
                   </Button>
@@ -62,3 +74,9 @@ export default class LoginPage extends Component {
     );
   }
 }
+
+LoginPage.propTypes = {
+  history: PropTypes.shape().isRequired,
+};
+
+export default withRouter(LoginPage);

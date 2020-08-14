@@ -6,7 +6,7 @@ import messages from './messages';
 
 const withPrimaryLayout = Component => () => (
   <div>
-    <Menu fixed="top" inverted>
+    <Menu inverted>
       <Container>
         <Menu.Item as="a" header>
           <Image
@@ -37,8 +37,9 @@ const withPrimaryLayout = Component => () => (
         </Dropdown> */}
       </Container>
     </Menu>
-
-    <Component />
+    <Container>
+      <Component />
+    </Container>
   </div>
 );
 

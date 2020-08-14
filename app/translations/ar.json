@@ -1,6 +1,6 @@
 {
-  "app.containers.HomePage.header": "مرحباً قى موقع الطريق إلى القرآن",
+  "app.containers.HomePage.header": "مرحباً فى موقع الطريق إلى القرآن",
   "app.layouts.PrimaryLayout.header": "الطريق إلى القرآن",
-  "app.containers.LoginPage.header": "مرحباً قى موقع الطريق إلى القرآن",
+  "app.containers.LoginPage.header": "مرحباً فى موقع الطريق إلى القرآن",
   "app.containers.LoginPage.loginButtonText": "تسجيل الدخول"
 }
