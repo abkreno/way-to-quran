@@ -19,8 +19,6 @@ const ngrok =
 const { resolve } = require('path');
 const app = express();
 
-console.log(config.oauth2Credentials.client_id);
-
 // If you need a backend, e.g. an API, add your custom backend-specific middleware here
 // app.use('/api', myApi);
 
