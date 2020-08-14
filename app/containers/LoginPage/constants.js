@@ -4,6 +4,6 @@
  *
  */
 
-export const LOGIN_USER = 'app/LoginPage/LOGIN_USER';
-export const LOGIN_USER_SUCCESS = 'app/LoginPage/LOGIN_USER_SUCCESS';
-export const LOGIN_USER_ERROR = 'app/LoginPage/LOGIN_USER_ERROR';
+export const LOAD_USER = 'app/LoginPage/LOAD_USER';
+export const LOAD_USER_SUCCESS = 'app/LoginPage/LOAD_USER_SUCCESS';
+export const LOAD_USER_ERROR = 'app/LoginPage/LOAD_USER_ERROR';

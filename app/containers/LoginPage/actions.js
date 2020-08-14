@@ -15,16 +15,16 @@
  *    }
  */
 
-import { LOGIN_USER, LOGIN_USER_SUCCESS, LOGIN_USER_ERROR } from './constants';
+import { LOAD_USER, LOAD_USER_SUCCESS, LOAD_USER_ERROR } from './constants';
 
 /**
  * Start the login, this action starts the request saga
  *
- * @return {object} An action object with a type of LOGIN_USER
+ * @return {object} An action object with a type of LOAD_USER
  */
 export function loginUser() {
   return {
-    type: LOGIN_USER,
+    type: LOAD_USER,
   };
 }
 
@@ -33,11 +33,11 @@ export function loginUser() {
  *
  * @param  {object} user The user data
  *
- * @return {object}      An action object with a type of LOGIN_USER_SUCCESS passing the user
+ * @return {object}      An action object with a type of LOAD_USER_SUCCESS passing the user
  */
 export function userLoggedIn(user) {
   return {
-    type: LOGIN_USER_SUCCESS,
+    type: LOAD_USER_SUCCESS,
     user,
   };
 }
@@ -47,11 +47,11 @@ export function userLoggedIn(user) {
  *
  * @param  {object} error The error
  *
- * @return {object}       An action object with a type of LOGIN_USER_ERROR passing the error
+ * @return {object}       An action object with a type of LOAD_USER_ERROR passing the error
  */
 export function userLoginError(error) {
   return {
-    type: LOGIN_USER_ERROR,
+    type: LOAD_USER_ERROR,
     error,
   };
 }

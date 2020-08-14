@@ -2,18 +2,27 @@ import { createSelector } from 'reselect';
 import { initialState } from './reducer';
 
 /**
- * Direct selector to the login state domain
+ * Direct selector to the user state domain
  */
-const selectLogin = state => state.login || initialState;
+const selectUser = state => state.user || initialState;
 
 /**
- * Select the login locale
+ * Select the user loading flag
  */
 
-const makeSelectIsLoggingIn = () =>
+const makeSelectIsLoadingUserData = () =>
   createSelector(
-    selectLogin,
-    loginState => loginState.isLoggingIn,
+    selectUser,
+    userState => userState.isLoadingUserData,
   );
 
-export { selectLogin, makeSelectIsLoggingIn };
+/**
+ * Select the user data
+ */
+const makeSelectUserData = () =>
+  createSelector(
+    selectUser,
+    userState => userState.userData,
+  );
+
+export { selectUser, makeSelectIsLoadingUserData, makeSelectUserData };
