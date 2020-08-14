@@ -16,13 +16,14 @@ import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import PrivateRoute from 'containers/PrivateRoute/Loadable';
 
 import GlobalStyle from '../../global-styles';
+import withPrimaryLayout from '../../layouts/PrimaryLayout';
 
 export default function App() {
   return (
     <div>
       <Switch>
-        <PrivateRoute exact path="/" component={HomePage} />
-        <Route exact path="/login" component={LoginPage} />
+        <PrivateRoute exact path="/" component={withPrimaryLayout(HomePage)} />
+        <Route exact path="/login" component={withPrimaryLayout(LoginPage)} />
         <Route component={NotFoundPage} />
       </Switch>
       <GlobalStyle />

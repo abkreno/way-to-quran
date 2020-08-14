@@ -11,6 +11,10 @@ const GlobalStyle = createGlobalStyle`
   body {
     font-family: 'Tajawal', sans-serif;
   }
+
+  body * {
+    font-family: 'Tajawal', sans-serif;
+  }
   
   body.fontLoaded {
     font-family: 'Tajawal', sans-serif;
