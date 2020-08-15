@@ -4,7 +4,7 @@
 
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { LOAD_USER } from 'containers/LoginPage/constants';
-import { userLoggedIn, userLoginError } from 'containers/LoginPage/actions';
+import { userLoaded, userLoadingError } from 'containers/LoginPage/actions';
 
 import request from 'utils/request';
 // import { makeSelectJWT } from 'containers/LoginPage/selectors';
@@ -25,9 +25,9 @@ export function* loadUserData() {
   try {
     // Call our request helper (see 'utils/request')
     const user = yield call(request, requestURL, requestOptions);
-    yield put(userLoggedIn(user));
+    yield put(userLoaded(user));
   } catch (err) {
-    yield put(userLoginError(err));
+    yield put(userLoadingError(err));
   }
 }
 

@@ -18,7 +18,7 @@ const userProviderReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
       case LOAD_USER:
-        draft.isLoadingUserData = action.isLoadingUserData;
+        draft.isLoadingUserData = true;
         break;
       case LOAD_USER_SUCCESS:
         draft.isLoadingUserData = false;

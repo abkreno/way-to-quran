@@ -18,24 +18,24 @@
 import { LOAD_USER, LOAD_USER_SUCCESS, LOAD_USER_ERROR } from './constants';
 
 /**
- * Start the login, this action starts the request saga
+ * Start the user, this action starts the request saga
  *
  * @return {object} An action object with a type of LOAD_USER
  */
-export function loginUser() {
+export function loadUser() {
   return {
     type: LOAD_USER,
   };
 }
 
 /**
- * Dispatched when the login is loaded by the request saga
+ * Dispatched when the user is loaded by the request saga
  *
  * @param  {object} user The user data
  *
  * @return {object}      An action object with a type of LOAD_USER_SUCCESS passing the user
  */
-export function userLoggedIn(user) {
+export function userLoaded(user) {
   return {
     type: LOAD_USER_SUCCESS,
     user,
@@ -43,13 +43,13 @@ export function userLoggedIn(user) {
 }
 
 /**
- * Dispatched when loading the login fails
+ * Dispatched when loading the user fails
  *
  * @param  {object} error The error
  *
  * @return {object}       An action object with a type of LOAD_USER_ERROR passing the error
  */
-export function userLoginError(error) {
+export function userLoadingError(error) {
   return {
     type: LOAD_USER_ERROR,
     error,

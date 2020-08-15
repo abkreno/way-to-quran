@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { GoogleLogin } from 'react-google-login';
 import { FormattedMessage } from 'react-intl';
 import { withRouter, Redirect } from 'react-router-dom';
@@ -12,20 +12,37 @@ import {
   Image,
   Segment,
 } from 'semantic-ui-react';
-import messages from './messages';
-import mushafLogo from '../../images/mushaf.png';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import isEmpty from 'lodash/isEmpty';
 
-function LoginPage({ history }) {
+import { useInjectReducer } from 'utils/injectReducer';
+import { useInjectSaga } from 'utils/injectSaga';
+
+import messages from './messages';
+import saga from './saga';
+import reducer from './reducer';
+import { images } from '../../images';
+import { makeSelectIsLoadingUserData, makeSelectUserData } from './selectors';
+import { loadUser } from './actions';
+
+const key = 'user';
+
+function LoginPage({ userData, onLoginSuccess, isLoadingUserData }) {
   const onSuccess = response => {
     localStorage.setItem('jwt', response.accessToken);
-    history.push('/');
+    onLoginSuccess();
   };
 
   const onFailure = response => {
     console.log(response);
   };
 
-  if (localStorage.getItem('jwt')) {
+  useInjectReducer({ key, reducer });
+  useInjectSaga({ key, saga });
+
+  if (!isEmpty(userData)) {
     return <Redirect to="/" />;
   }
   return (
@@ -38,7 +55,8 @@ function LoginPage({ history }) {
       <Grid.Column style={{ maxWidth: '90%', width: 600 }}>
         <Segment>
           <Header as="h2" color="teal" textAlign="center">
-            <Image src={mushafLogo} /> <FormattedMessage {...messages.header} />
+            <Image src={images.mushafLogo} />{' '}
+            <FormattedMessage {...messages.header} />
           </Header>
           <Form size="large">
             <GoogleLogin
@@ -48,7 +66,7 @@ function LoginPage({ history }) {
                 <Button
                   onClick={renderProps.onClick}
                   disabled={renderProps.disabled}
-                  loading={renderProps.disabled}
+                  loading={renderProps.disabled || isLoadingUserData}
                   color="google plus"
                   fluid
                   size="large"
@@ -70,6 +88,32 @@ function LoginPage({ history }) {
 
 LoginPage.propTypes = {
   history: PropTypes.shape().isRequired,
+  userData: PropTypes.shape().isRequired,
+  isLoadingUserData: PropTypes.bool.isRequired,
+  onLoginSuccess: PropTypes.func.isRequired,
 };
 
-export default withRouter(LoginPage);
+const mapStateToProps = createStructuredSelector({
+  userData: makeSelectUserData(),
+  isLoadingUserData: makeSelectIsLoadingUserData(),
+});
+
+export function mapDispatchToProps(dispatch) {
+  return {
+    onLoginSuccess: evt => {
+      if (evt !== undefined && evt.preventDefault) evt.preventDefault();
+      dispatch(loadUser());
+    },
+  };
+}
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+
+export default compose(
+  withConnect,
+  memo,
+  withRouter,
+)(LoginPage);

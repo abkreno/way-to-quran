@@ -17,6 +17,16 @@ const makeSelectIsLoadingUserData = () =>
   );
 
 /**
+ * Select the user jwt
+ */
+
+const makeSelectJWT = () =>
+  createSelector(
+    selectUser,
+    userState => userState.jwt,
+  );
+
+/**
  * Select the user data
  */
 const makeSelectUserData = () =>
@@ -25,4 +35,9 @@ const makeSelectUserData = () =>
     userState => userState.userData,
   );
 
-export { selectUser, makeSelectIsLoadingUserData, makeSelectUserData };
+export {
+  selectUser,
+  makeSelectIsLoadingUserData,
+  makeSelectUserData,
+  makeSelectJWT,
+};
