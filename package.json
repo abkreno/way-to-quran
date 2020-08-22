@@ -22,9 +22,9 @@
     "prebuild": "npm run build:clean",
     "build": "cross-env NODE_ENV=production webpack --config internals/webpack/webpack.prod.babel.js --color -p --progress --hide-modules --display-optimization-bailout",
     "build:clean": "rimraf ./build",
-    "start": "cross-env NODE_ENV=development node server",
+    "start:dev": "cross-env NODE_ENV=development node server",
+    "start": "npm run build && npm run start:prod",
     "start:tunnel": "cross-env NODE_ENV=development ENABLE_TUNNEL=true node server",
-    "start:production": "npm run build && npm run start:prod",
     "start:prod": "cross-env NODE_ENV=production node server",
     "presetup": "npm i chalk shelljs",
     "setup": "node ./internals/scripts/setup.js",
@@ -44,7 +44,7 @@
     "coveralls": "cat ./coverage/lcov.info | coveralls",
     "prettify": "prettier --write",
     "docs": "apidoc -i server -o server/docs",
-    "heroku-postbuild": "npm install && npm run build && npm run start:production"
+    "heroku-postbuild": "npm install && npm run build && npm run start"
   },
   "browserslist": [
     "last 2 versions",
