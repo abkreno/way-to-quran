@@ -1,6 +1,8 @@
 {
   "app.containers.HomePage.header": "مرحباً فى موقع الطريق إلى القرآن",
   "app.layouts.PrimaryLayout.header": "الطريق إلى القرآن",
+  "app.layouts.PrimaryLayout.logoutButtonText": "تسجيل الخروج",
+  "app.layouts.PrimaryLayout.dailyQuranText": "الورد اليومى",
   "app.containers.LoginPage.header": "مرحباً فى موقع الطريق إلى القرآن",
   "app.containers.LoginPage.loginButtonText": "تسجيل الدخول"
 }

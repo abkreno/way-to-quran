@@ -1,6 +1,8 @@
 {
   "app.containers.HomePage.header": "Welcome to way to quran",
   "app.layouts.PrimaryLayout.header": "Way To Quran",
+  "app.layouts.PrimaryLayout.logoutButtonText": "Logout",
+  "app.layouts.PrimaryLayout.dailyQuranText": "Daily Quran",
   "app.containers.LoginPage.header": "Welcome to way to quran",
   "app.containers.LoginPage.loginButtonText": "Login"
 }

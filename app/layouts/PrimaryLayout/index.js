@@ -1,33 +1,47 @@
 import React, { memo, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Container, Image, Menu } from 'semantic-ui-react';
+import { Container, Image, Menu, Dropdown } from 'semantic-ui-react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import isEmpty from 'lodash/isEmpty';
+import { withRouter } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
+import withDirection, {
+  withDirectionPropTypes,
+  DIRECTIONS,
+} from 'react-with-direction';
 
 import reducer from 'containers/LoginPage/reducer';
 import saga from 'containers/LoginPage/saga';
+import { loadUser, userLoaded } from 'containers/LoginPage/actions';
+import { makeSelectUserData } from 'containers/LoginPage/selectors';
 
 import { images } from '../../images';
 import messages from './messages';
 import { useInjectReducer } from '../../utils/injectReducer';
 import { useInjectSaga } from '../../utils/injectSaga';
-import { loadUser } from '../../containers/LoginPage/actions';
-import { makeSelectUserData } from '../../containers/LoginPage/selectors';
 
 const key = 'user';
 
-function PrimaryLayout({ children, loadUserData, userData }) {
+function PrimaryLayout({
+  children,
+  loadUserData,
+  userData,
+  logout,
+  direction,
+  history,
+}) {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
+
+  const isLoggedIn = localStorage.getItem('access_token') && !isEmpty(userData);
 
   useEffect(() => {
     if (localStorage.getItem('access_token') && isEmpty(userData)) {
       loadUserData();
     }
-  }, [userData]);
+  });
 
   return (
     <div>
@@ -41,25 +55,38 @@ function PrimaryLayout({ children, loadUserData, userData }) {
             />
             <FormattedMessage {...messages.header} />
           </Menu.Item>
-          {/* <Menu.Item as="a">Home</Menu.Item> */}
-
-          {/* <Dropdown item simple text="Dropdown">
-        <Dropdown.Menu>
-          <Dropdown.Item>List Item</Dropdown.Item>
-          <Dropdown.Item>List Item</Dropdown.Item>
-          <Dropdown.Divider />
-          <Dropdown.Header>Header Item</Dropdown.Header>
-          <Dropdown.Item>
-            <i className="dropdown icon" />
-            <span className="text">Submenu</span>
-            <Dropdown.Menu>
-              <Dropdown.Item>List Item</Dropdown.Item>
-              <Dropdown.Item>List Item</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown.Item>
-          <Dropdown.Item>List Item</Dropdown.Item>
-        </Dropdown.Menu>
-      </Dropdown> */}
+          {isLoggedIn && (
+            <Menu.Menu
+              position={direction === DIRECTIONS.LTR ? 'right' : 'left'}
+            >
+              <Dropdown
+                item
+                simple
+                icon={<Image src={userData.picture} avatar />}
+              >
+                <Dropdown.Menu>
+                  <Dropdown.Divider />
+                  <Dropdown.Item
+                    onClick={() => {
+                      history.push('/daily-quran');
+                    }}
+                  >
+                    <FormattedMessage {...messages.dailyQuranText} />
+                  </Dropdown.Item>
+                  <Dropdown.Divider />
+                  <Dropdown.Item
+                    onClick={() => {
+                      history.push('/');
+                      logout();
+                    }}
+                    icon="sign-out"
+                    text={<FormattedMessage {...messages.logoutButtonText} />}
+                  />
+                </Dropdown.Menu>
+              </Dropdown>
+            </Menu.Menu>
+          )}
+          {isLoggedIn && <Menu.Item name={userData.name} as="span" header />}
         </Container>
       </Menu>
       <Container>{React.Children.only(children)}</Container>
@@ -69,8 +96,10 @@ function PrimaryLayout({ children, loadUserData, userData }) {
 
 PrimaryLayout.propTypes = {
   children: PropTypes.shape().isRequired,
+  history: PropTypes.shape().isRequired,
   userData: PropTypes.shape().isRequired,
   loadUserData: PropTypes.func.isRequired,
+  ...withDirectionPropTypes,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -81,6 +110,10 @@ const mapDispatchToProps = dispatch => ({
   loadUserData: () => {
     dispatch(loadUser());
   },
+  logout: () => {
+    localStorage.removeItem('access_token');
+    dispatch(userLoaded({}));
+  },
 });
 
 const withConnect = connect(
@@ -90,6 +123,8 @@ const withConnect = connect(
 
 const ComposedPrimaryLayout = compose(
   withConnect,
+  withRouter,
+  withDirection,
   memo,
 )(PrimaryLayout);
 

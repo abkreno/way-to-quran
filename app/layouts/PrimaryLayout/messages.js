@@ -11,4 +11,10 @@ export default defineMessages({
   header: {
     id: `${scope}.header`,
   },
+  logoutButtonText: {
+    id: `${scope}.logoutButtonText`,
+  },
+  dailyQuranText: {
+    id: `${scope}.dailyQuranText`,
+  },
 });
