@@ -2,15 +2,12 @@
 /* eslint consistent-return:0 import/order:0 */
 
 const express = require('express');
-const logger = require('./logger');
+const logger = require('./config/logger');
 
-const argv = require('./argv');
+const argv = require('./config/argv');
 const setup = require('./middlewares/frontendMiddleware');
-const config = require('./config');
+const { port, host, prettyHost } = require('./config/vars');
 
-const port = config.port;
-const host = config.host;
-const prettyHost = config.prettyHost;
 const isDev = process.env.NODE_ENV !== 'production';
 const ngrok =
   (isDev && process.env.ENABLE_TUNNEL) || argv.tunnel
@@ -54,3 +51,9 @@ app.listen(port, host, async err => {
     logger.appStarted(port, prettyHost);
   }
 });
+
+/**
+ * Exports express
+ * @public
+ */
+module.exports = app;
