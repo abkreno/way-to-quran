@@ -11,7 +11,7 @@ module.exports = {
         .max(100),
       name: Joi.string(),
       email: Joi.string(),
-      role: Joi.string().valid(User.roles),
+      role: Joi.string().valid(...User.roles),
     },
   },
 
@@ -26,7 +26,7 @@ module.exports = {
         .max(128)
         .required(),
       name: Joi.string().max(128),
-      role: Joi.string().valid(User.roles),
+      role: Joi.string().valid(...User.roles),
     },
   },
 
@@ -41,7 +41,7 @@ module.exports = {
         .max(128)
         .required(),
       name: Joi.string().max(128),
-      role: Joi.string().valid(User.roles),
+      role: Joi.string().valid(...User.roles),
     },
     params: {
       userId: Joi.string()
@@ -58,7 +58,7 @@ module.exports = {
         .min(6)
         .max(128),
       name: Joi.string().max(128),
-      role: Joi.string().valid(User.roles),
+      role: Joi.string().valid(...User.roles),
     },
     params: {
       userId: Joi.string()

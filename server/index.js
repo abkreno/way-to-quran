@@ -1,7 +1,12 @@
 /* eslint-disable prefer-destructuring */
 /* eslint consistent-return:0 import/order:0 */
 
-const express = require('express');
+const mongoose = require('./config/mongoose');
+const app = require('./config/express');
+
+// open mongoose connection
+mongoose.connect();
+
 const logger = require('./config/logger');
 
 const argv = require('./config/argv');
@@ -14,7 +19,6 @@ const ngrok =
     ? require('ngrok')
     : false;
 const { resolve } = require('path');
-const app = express();
 
 // If you need a backend, e.g. an API, add your custom backend-specific middleware here
 // app.use('/api', myApi);
