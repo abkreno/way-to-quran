@@ -2,7 +2,6 @@
 /* eslint consistent-return:0 import/order:0 */
 
 const mongoose = require('./config/mongoose');
-const app = require('./config/express');
 
 // open mongoose connection
 mongoose.connect();
@@ -21,6 +20,7 @@ const ngrok =
 const { resolve } = require('path');
 
 // If you need a backend, e.g. an API, add your custom backend-specific middleware here
+const app = require('./config/express');
 // app.use('/api', myApi);
 
 // In production we need to pass these values in instead of relying on webpack
