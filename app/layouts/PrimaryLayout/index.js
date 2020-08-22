@@ -4,6 +4,7 @@ import { Container, Image, Menu } from 'semantic-ui-react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import isEmpty from 'lodash/isEmpty';
 import { createStructuredSelector } from 'reselect';
 
 import reducer from 'containers/LoginPage/reducer';
@@ -14,18 +15,19 @@ import messages from './messages';
 import { useInjectReducer } from '../../utils/injectReducer';
 import { useInjectSaga } from '../../utils/injectSaga';
 import { loadUser } from '../../containers/LoginPage/actions';
+import { makeSelectUserData } from '../../containers/LoginPage/selectors';
 
 const key = 'user';
 
-function PrimaryLayout({ children, loadUserData }) {
+function PrimaryLayout({ children, loadUserData, userData }) {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 
   useEffect(() => {
-    if (localStorage.getItem('jwt')) {
+    if (localStorage.getItem('access_token') && isEmpty(userData)) {
       loadUserData();
     }
-  });
+  }, [userData]);
 
   return (
     <div>
@@ -67,10 +69,13 @@ function PrimaryLayout({ children, loadUserData }) {
 
 PrimaryLayout.propTypes = {
   children: PropTypes.shape().isRequired,
+  userData: PropTypes.shape().isRequired,
   loadUserData: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = createStructuredSelector({});
+const mapStateToProps = createStructuredSelector({
+  userData: makeSelectUserData(),
+});
 
 const mapDispatchToProps = dispatch => ({
   loadUserData: () => {

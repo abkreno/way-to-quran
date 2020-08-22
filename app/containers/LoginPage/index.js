@@ -31,7 +31,7 @@ const key = 'user';
 
 function LoginPage({ userData, onLoginSuccess, isLoadingUserData }) {
   const onSuccess = response => {
-    localStorage.setItem('jwt', response.accessToken);
+    localStorage.setItem('access_token', response.accessToken);
     onLoginSuccess();
   };
 

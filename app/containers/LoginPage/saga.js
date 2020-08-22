@@ -14,17 +14,22 @@ import request from 'utils/request';
  */
 export function* loadUserData() {
   // Select jwt from store
-  const jwt = localStorage.getItem('jwt');
-  const requestURL = `/api/login`;
+  const accessToken = localStorage.getItem('access_token');
+  const requestURL = `/api/v1/auth/google`;
   const requestOptions = {
     method: 'POST',
     headers: {
-      Authorization: `Bearer ${jwt}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
     },
+    body: JSON.stringify({
+      access_token: accessToken,
+    }),
   };
   try {
     // Call our request helper (see 'utils/request')
-    const user = yield call(request, requestURL, requestOptions);
+    const { user } = yield call(request, requestURL, requestOptions);
+    console.log(user);
     yield put(userLoaded(user));
   } catch (err) {
     yield put(userLoadingError(err));
