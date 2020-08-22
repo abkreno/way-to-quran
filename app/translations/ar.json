@@ -1,5 +1,9 @@
 {
   "app.containers.HomePage.header": "مرحباً فى موقع الطريق إلى القرآن",
+  "app.containers.HomePage.formHeader": "أدخل الورد اليومى",
+  "app.containers.HomePage.durationLabel": "مدة القراءة",
+  "app.containers.HomePage.durationPlaceHolder": "30 Minutes",
+  "app.containers.HomePage.submitButtonText": "إدخال",
   "app.layouts.PrimaryLayout.header": "الطريق إلى القرآن",
   "app.layouts.PrimaryLayout.logoutButtonText": "تسجيل الخروج",
   "app.layouts.PrimaryLayout.dailyQuranText": "الورد اليومى",

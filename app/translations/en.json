@@ -1,5 +1,9 @@
 {
   "app.containers.HomePage.header": "Welcome to way to quran",
+  "app.containers.HomePage.formHeader": "Enter Today's Quran Duration",
+  "app.containers.HomePage.durationLabel": "Duration",
+  "app.containers.HomePage.durationPlaceHolder": "30 Minutes",
+  "app.containers.HomePage.submitButtonText": "Submit",
   "app.layouts.PrimaryLayout.header": "Way To Quran",
   "app.layouts.PrimaryLayout.logoutButtonText": "Logout",
   "app.layouts.PrimaryLayout.dailyQuranText": "Daily Quran",

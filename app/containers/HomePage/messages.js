@@ -11,4 +11,16 @@ export default defineMessages({
   header: {
     id: `${scope}.header`,
   },
+  formHeader: {
+    id: `${scope}.formHeader`,
+  },
+  durationLabel: {
+    id: `${scope}.durationLabel`,
+  },
+  durationPlaceHolder: {
+    id: `${scope}.durationPlaceHolder`,
+  },
+  submitButtonText: {
+    id: `${scope}.submitButtonText`,
+  },
 });
