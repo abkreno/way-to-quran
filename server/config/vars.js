@@ -5,10 +5,11 @@ const argv = require('./argv');
 const customHost = argv.host || process.env.HOST;
 const host = customHost || null; // Let http.Server use its default IPv6/4 host
 const prettyHost = customHost || 'localhost';
-
 // // import .env variables
+const envPath =
+  process.env.NODE_ENV === 'production' ? '../../.env.prod' : '../../.env';
 require('dotenv-safe').config({
-  path: path.join(__dirname, '../../.env'),
+  path: path.join(__dirname, envPath),
   sample: path.join(__dirname, '../../.env.example'),
 });
 
