@@ -11,24 +11,24 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
-import DirectionProvider, {
+import ReactDirectionProvider, {
   DIRECTIONS,
 } from 'react-with-direction/dist/DirectionProvider';
 
 import { makeSelectLocale } from 'containers/LanguageProvider/selectors';
 
-export function LanguageProvider(props) {
+export function DirectionProvider(props) {
   const direction = props.locale.includes('ar')
     ? DIRECTIONS.RTL
     : DIRECTIONS.LTR;
   return (
-    <DirectionProvider direction={direction}>
+    <ReactDirectionProvider direction={direction}>
       {React.Children.only(props.children)}
-    </DirectionProvider>
+    </ReactDirectionProvider>
   );
 }
 
-LanguageProvider.propTypes = {
+DirectionProvider.propTypes = {
   locale: PropTypes.string,
   children: PropTypes.element.isRequired,
 };
@@ -49,4 +49,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(LanguageProvider);
+)(DirectionProvider);
