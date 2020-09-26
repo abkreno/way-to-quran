@@ -5,12 +5,13 @@ const customHost = process.env.HOST;
 const host = customHost || null; // Let http.Server use its default IPv6/4 host
 const prettyHost = customHost || 'localhost';
 // // import .env variables
-const envPath =
-  process.env.NODE_ENV === 'production' ? '../../.env' : '../../.env.dev';
-require('dotenv-safe').config({
-  path: path.join(__dirname, envPath),
-  sample: path.join(__dirname, '../../.env.example'),
-});
+if (process.env.NODE_ENV !== 'production') {
+  // eslint-disable-next-line global-require
+  require('dotenv-safe').config({
+    path: path.join(__dirname, '../../.env.dev'),
+    sample: path.join(__dirname, '../../.env.example'),
+  });
+}
 module.exports = {
   env: process.env.NODE_ENV,
   jwtSecret: process.env.JWT_SECRET,
