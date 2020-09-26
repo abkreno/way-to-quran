@@ -10,9 +10,9 @@ const logger = require('./config/logger');
 
 const argv = require('./config/argv');
 const setup = require('./middlewares/frontendMiddleware');
-const { port, host, prettyHost } = require('./config/vars');
-
+const port = process.env.PORT || 3000;
 const isDev = process.env.NODE_ENV !== 'production';
+const host = isDev ? 'localhost' : '0.0.0.0';
 const ngrok =
   (isDev && process.env.ENABLE_TUNNEL) || argv.tunnel
     ? require('ngrok')
@@ -50,9 +50,9 @@ app.listen(port, host, async err => {
     } catch (e) {
       return logger.error(e);
     }
-    logger.appStarted(port, prettyHost, url);
+    logger.appStarted(port, host, url);
   } else {
-    logger.appStarted(port, prettyHost);
+    logger.appStarted(port, host);
   }
 });
 
