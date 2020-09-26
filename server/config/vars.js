@@ -16,7 +16,7 @@ module.exports = {
   env: process.env.NODE_ENV,
   jwtSecret: process.env.JWT_SECRET,
   jwtExpirationInterval: process.env.JWT_EXPIRATION_MINUTES,
-  port: parseInt(argv.port || process.env.PORT || '3000', 10),
+  port: process.env.PORT || 3000,
   host,
   prettyHost,
   logs: process.env.NODE_ENV === 'production' ? 'combined' : 'dev',
