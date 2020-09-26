@@ -22,6 +22,10 @@ const logger = {
     if (tunnelStarted) {
       console.log(`Tunnel initialised ${chalk.green('✓')}`);
     }
+    const { PORT, HOST, NODE_ENV } = process.env;
+    console.log(
+      `>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ${PORT} ${HOST} ${NODE_ENV}`,
+    );
 
     console.log(`
 ${chalk.bold('Access URLs:')}${divider}
