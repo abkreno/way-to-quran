@@ -9,7 +9,7 @@ mongoose.connect();
 const logger = require('./config/logger');
 
 const argv = require('./config/argv');
-const setup = require('./middlewares/frontendMiddleware');
+// const setup = require('./middlewares/frontendMiddleware');
 const { port, host, prettyHost } = require('./config/vars');
 
 const isDev = process.env.NODE_ENV !== 'production';
@@ -17,17 +17,17 @@ const ngrok =
   (isDev && process.env.ENABLE_TUNNEL) || argv.tunnel
     ? require('ngrok')
     : false;
-const { resolve } = require('path');
+// const { resolve } = require('path');
 
 // If you need a backend, e.g. an API, add your custom backend-specific middleware here
 const app = require('./config/express');
 // app.use('/api', myApi);
 
 // In production we need to pass these values in instead of relying on webpack
-setup(app, {
-  outputPath: resolve(process.cwd(), 'build'),
-  publicPath: '/',
-});
+// setup(app, {
+//   outputPath: resolve(process.cwd(), 'build'),
+//   publicPath: '/',
+// });
 
 // use the gzipped bundle
 app.get('*.js', (req, res, next) => {
