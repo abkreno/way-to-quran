@@ -1,1 +1,1 @@
-web: NODE_ENV=production npm i && node server
+web: node server
