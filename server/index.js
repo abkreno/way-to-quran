@@ -21,6 +21,7 @@ const { resolve } = require('path');
 
 // If you need a backend, e.g. an API, add your custom backend-specific middleware here
 const app = require('./config/express');
+const { setupBotWebhook } = require('./config/botSetup');
 // app.use('/api', myApi);
 
 // In production we need to pass these values in instead of relying on webpack
@@ -47,11 +48,16 @@ app.listen(port, host, async err => {
     let url;
     try {
       url = await ngrok.connect(port);
+      await setupBotWebhook(`${url}/api/v1/bot/botUpdate`);
     } catch (e) {
+      console.log(e);
       return logger.error(e);
     }
     logger.appStarted(port, prettyHost, url);
   } else {
+    await setupBotWebhook(
+      `https://way-to-quran.herokuapp.com/api/v1/bot/botUpdate`,
+    );
     logger.appStarted(port, prettyHost);
   }
 });
