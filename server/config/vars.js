@@ -12,6 +12,7 @@ if (process.env.NODE_ENV !== 'production') {
     sample: path.join(__dirname, '../../.env.example'),
   });
 }
+
 module.exports = {
   env: process.env.NODE_ENV,
   jwtSecret: process.env.JWT_SECRET,
