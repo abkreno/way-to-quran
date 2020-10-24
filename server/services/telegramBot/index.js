@@ -12,8 +12,7 @@ const BotUser = require('../../models/botUser.model');
 
 // replace the value below with the Telegram token you receive from @BotFather
 const token = process.env.TELEGRAM_BOT_TOKEN;
-
-const bot = new TelegramBot(token, { polling: true });
+const bot = new TelegramBot(token);
 
 const sendPoll = async (user, type, question, options) => {
   // send daily verse poll
