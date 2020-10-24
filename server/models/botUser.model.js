@@ -28,6 +28,15 @@ const botUserSchema = new mongoose.Schema(
     language_code: {
       type: String,
     },
+    polls: {
+      type: [
+        {
+          id: String,
+          name: String,
+          options: [String],
+        },
+      ],
+    },
   },
   {
     timestamps: true,
@@ -45,7 +54,7 @@ botUserSchema.method({});
 botUserSchema.statics = {
   async findOneOrCreate(condition) {
     const self = this;
-    const result = await self.findOne(condition);
+    const result = await self.findOne({ id: condition.id });
     return result || self.create(condition);
   },
   /**

@@ -21,7 +21,8 @@ const { resolve } = require('path');
 
 // If you need a backend, e.g. an API, add your custom backend-specific middleware here
 const app = require('./config/express');
-const { setupBotWebhook } = require('./config/botSetup');
+// const { setupBotWebhook } = require('./config/botSetup');
+const { setupBotWebhook } = require('./services/telegramBot');
 // app.use('/api', myApi);
 
 // In production we need to pass these values in instead of relying on webpack
