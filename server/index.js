@@ -49,16 +49,14 @@ app.listen(port, host, async err => {
     let url;
     try {
       url = await ngrok.connect(port);
-      await setupBotWebhook(`${url}/api/v1/bot/botUpdate`);
+      await setupBotWebhook(`${url}`);
     } catch (e) {
       console.log(e);
       return logger.error(e);
     }
     logger.appStarted(port, prettyHost, url);
   } else {
-    await setupBotWebhook(
-      `https://way-to-quran.herokuapp.com/api/v1/bot/botUpdate`,
-    );
+    await setupBotWebhook(`https://way-to-quran.herokuapp.com`);
     logger.appStarted(port, prettyHost);
   }
 });

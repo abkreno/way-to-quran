@@ -35,7 +35,8 @@ const sendPoll = async (user, type, question, options) => {
   }
 };
 
-const setupBotWebhook = () => {
+const setupBotWebhook = url => {
+  bot.setWebHook(url);
   // Matches "/echo [whatever]"
   bot.onText(/\/echo (.+)/, (msg, match) => {
     // 'msg' is the received Message from Telegram
