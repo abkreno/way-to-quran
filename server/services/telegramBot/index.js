@@ -12,30 +12,15 @@ const BotUser = require('../../models/botUser.model');
 
 // replace the value below with the Telegram token you receive from @BotFather
 const token = process.env.TELEGRAM_BOT_TOKEN;
-const bot = new TelegramBot(token, { polling: true });
 
-const sendPoll = async (user, type, question, options) => {
-  // send daily verse poll
-  const message = await bot.sendPoll(user.id, question, options, {
-    is_anonymous: false,
+const setupBotWebhook = (url, port) => {
+  const bot = new TelegramBot(token, {
+    webhook: { port },
   });
-  const poll = {
-    name: type,
-    id: message.poll.id,
-    options,
-  };
-  try {
-    await BotUser.updateOne(
-      { id: user.id },
-      { $set: { polls: [...user.polls, poll] } },
-    );
-  } catch (error) {
-    console.log(error);
-  }
-};
+  const webhookUrl = `${url}:${port}/bot${token}`;
+  console.log(webhookUrl);
+  bot.setWebHook(webhookUrl);
 
-const setupBotWebhook = url => {
-  bot.setWebHook(url);
   // Matches "/echo [whatever]"
   bot.onText(/\/echo (.+)/, (msg, match) => {
     // 'msg' is the received Message from Telegram
@@ -48,6 +33,26 @@ const setupBotWebhook = url => {
     // send back the matched "whatever" to the chat
     bot.sendMessage(chatId, resp);
   });
+
+  const sendPoll = async (user, type, question, options) => {
+    // send daily verse poll
+    const message = await bot.sendPoll(user.id, question, options, {
+      is_anonymous: false,
+    });
+    const poll = {
+      name: type,
+      id: message.poll.id,
+      options,
+    };
+    try {
+      await BotUser.updateOne(
+        { id: user.id },
+        { $set: { polls: [...user.polls, poll] } },
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   bot.onText(/\/dailyverse/, async msg => {
     const user = await BotUser.findOneOrCreate(msg.chat);
@@ -81,6 +86,5 @@ const setupBotWebhook = url => {
 };
 
 module.exports = {
-  bot,
   setupBotWebhook,
 };
