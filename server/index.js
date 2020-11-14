@@ -12,18 +12,18 @@ const argv = require('./config/argv');
 const setup = require('./middlewares/frontendMiddleware');
 const { port, host, prettyHost } = require('./config/vars');
 
-const isDev = process.env.NODE_ENV !== 'production';
+// const isDev = process.env.NODE_ENV !== 'production';
 const ngrok =
-  (isDev && process.env.ENABLE_TUNNEL) || argv.tunnel
-    ? require('ngrok')
-    : false;
+  process.env.ENABLE_TUNNEL || argv.tunnel ? require('ngrok') : false;
 const { resolve } = require('path');
 
 // If you need a backend, e.g. an API, add your custom backend-specific middleware here
 const app = require('./config/express');
 // const { setupBotWebhook } = require('./config/botSetup');
 const { setupBotWebhook } = require('./services/telegramBot');
-// app.use('/api', myApi);
+const { default: chalk } = require('chalk');
+const { deleteBotWebhook } = require('./config/botSetup');
+// app.use('/api', myAp);
 
 // In production we need to pass these values in instead of relying on webpack
 setup(app, {
@@ -46,9 +46,11 @@ app.listen(port, host, async err => {
 
   // Connect to ngrok in dev mode
   if (ngrok) {
+    await deleteBotWebhook();
     let url;
     try {
       url = await ngrok.connect(port);
+      console.log(chalk.green(`Using ngrok url ${url}`));
       await setupBotWebhook(`${url}`);
     } catch (e) {
       console.log(e);
@@ -56,7 +58,7 @@ app.listen(port, host, async err => {
     }
     logger.appStarted(port, prettyHost, url);
   } else {
-    await setupBotWebhook(`https://way-to-quran.herokuapp.com`);
+    await setupBotWebhook('https://way-to-quran.herokuapp.com');
     logger.appStarted(port, prettyHost);
   }
 });
